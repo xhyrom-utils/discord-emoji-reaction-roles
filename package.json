@@ -1,0 +1,15 @@
+{
+  "name": "emoji-reaction-role",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {},
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "discord.js": "^14.16.3"
+  }
+}

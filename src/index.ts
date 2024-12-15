@@ -22,6 +22,13 @@ client.on(Events.ClientReady, (readyClient) => {
   console.log(`Logged in as ${readyClient.user.tag}!`);
 });
 
+client.on(Events.GuildMemberAdd, (member) => {
+  if (messages.welcome.send())
+    member.user.send(
+      messages.welcome.build({ username: member.user.username }),
+    );
+});
+
 client.on(Events.InteractionCreate, (interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
@@ -59,11 +66,10 @@ client.on(Events.MessageReactionAdd, async (reaction, user) => {
   } catch {}
 
   try {
-    await member?.send(
-      messages.reactionAdd
-        .replace("{roleId}", db.roleId)
-        .replace("{roleName}", roleName),
-    );
+    if (messages.reactionAdd.send())
+      await member?.send(
+        messages.reactionAdd.build({ roleId: db.roleId, roleName: roleName }),
+      );
   } catch {}
 });
 
@@ -92,11 +98,13 @@ client.on(Events.MessageReactionRemove, async (reaction, user) => {
 
   if (db.permanent) {
     try {
-      await member?.send(
-        messages.reactionRemovePermanent
-          .replace("{roleId}", db.roleId)
-          .replace("{roleName}", roleName),
-      );
+      if (messages.reactionRemovePermanent.send())
+        await member?.send(
+          messages.reactionRemovePermanent.build({
+            roleId: db.roleId,
+            roleName: roleName,
+          }),
+        );
     } catch {}
     return;
   }
@@ -106,11 +114,13 @@ client.on(Events.MessageReactionRemove, async (reaction, user) => {
   } catch {}
 
   try {
-    await member?.send(
-      messages.reactionRemove
-        .replace("{roleId}", db.roleId)
-        .replace("{roleName}", roleName),
-    );
+    if (messages.reactionRemove.send())
+      await member?.send(
+        messages.reactionRemove.build({
+          roleId: db.roleId,
+          roleName: roleName,
+        }),
+      );
   } catch {}
 });
 

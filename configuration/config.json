@@ -3,6 +3,21 @@
   "messages": {
     "reaction_add": "Added role {roleName}.",
     "reaction_remove": "Removed role {roleName}.",
-    "reaction_remove_permanent": "Sorry, you can't remove {roleName} since it's permanent."
+    "reaction_remove_permanent": "Sorry, you can't remove {roleName} since it's permanent.",
+    "welcome": {
+      "title": ":Alicorn: Thu's Palace :Alicorn:",
+      "description": [
+        "Welcome {username} on this Server make sure to read the <#id of rule channel>",
+        "",
+        "You can verify yourself.... TexttextText editable in the config with Emojis etc or maybe a command"
+      ],
+      "color": "#ff0000"
+    }
+  },
+  "send": {
+    "reaction_add": false,
+    "reaction_remove": false,
+    "reaction_remove_permanent": false,
+    "welcome": true
   }
 }

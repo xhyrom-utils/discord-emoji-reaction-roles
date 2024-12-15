@@ -4,6 +4,7 @@
     "reaction_add": "Added role {roleName}.",
     "reaction_remove": "Removed role {roleName}.",
     "reaction_remove_permanent": "Sorry, you can't remove {roleName} since it's permanent.",
+    "disabled_dms": "I can't send you a DM, make sure your DMs are enabled.",
     "welcome": {
       "title": ":Alicorn: Thu's Palace :Alicorn:",
       "description": [

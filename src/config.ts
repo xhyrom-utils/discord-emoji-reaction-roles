@@ -1,5 +1,6 @@
 import {
   EmbedBuilder,
+  type BaseMessageOptions,
   type HexColorString,
   type MessageCreateOptions,
   type MessagePayload,
@@ -23,9 +24,7 @@ abstract class Message {
   }
 
   abstract send(): boolean;
-  abstract build(
-    ...placeholders: Record<string, string>[]
-  ): MessageCreateOptions | MessagePayload;
+  abstract build(...placeholders: Record<string, string>[]): BaseMessageOptions;
 }
 
 class SimpleMessage extends Message {
@@ -43,9 +42,7 @@ class SimpleMessage extends Message {
     return this._send;
   }
 
-  public build(
-    ...placeholders: Record<string, string>[]
-  ): MessageCreateOptions | MessagePayload {
+  public build(...placeholders: Record<string, string>[]): BaseMessageOptions {
     return {
       content: this.replacePlaceholders(this.content, ...placeholders),
     };
@@ -75,9 +72,7 @@ class EmbedMessage extends Message {
     return this._send;
   }
 
-  public build(
-    ...placeholders: Record<string, string>[]
-  ): MessageCreateOptions | MessagePayload {
+  public build(...placeholders: Record<string, string>[]): BaseMessageOptions {
     return {
       embeds: [
         new EmbedBuilder()
@@ -107,7 +102,7 @@ interface Config {
 }
 
 function message<T extends Message>(key: keyof typeof config.messages): T {
-  const send = config.send[key];
+  const send = config.send?.[key as keyof typeof config.send] ?? true;
   const message = config.messages[key];
 
   if (typeof message === "string")
@@ -132,6 +127,7 @@ export const { token, messages } = {
     reactionAdd: message<Message>("reaction_add"),
     reactionRemove: message<Message>("reaction_remove"),
     reactionRemovePermanent: message<Message>("reaction_remove_permanent"),
+    disabledDms: message<Message>("disabled_dms"),
     welcome: message<Message>("welcome"),
   },
-} as Config;
+} satisfies Config;

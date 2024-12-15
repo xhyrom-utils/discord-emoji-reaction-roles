@@ -1,5 +1,5 @@
 import { Events, GatewayIntentBits, Partials } from "discord.js";
-import { token } from "./config.ts";
+import { token, messages } from "./config.ts";
 import { Errle } from "./Errle.ts";
 import { get } from "./database.ts";
 
@@ -51,8 +51,19 @@ client.on(Events.MessageReactionAdd, async (reaction, user) => {
 
   const db = get(channelId, messageId, emoji);
 
+  const roleName = (await reaction.message.guild?.roles.fetch(db.roleId))?.name;
+  if (!roleName) return;
+
   try {
     await member?.roles.add(db.roleId);
+  } catch {}
+
+  try {
+    await member?.send(
+      messages.reactionAdd
+        .replace("{roleId}", db.roleId)
+        .replace("{roleName}", roleName),
+    );
   } catch {}
 });
 
@@ -75,10 +86,31 @@ client.on(Events.MessageReactionRemove, async (reaction, user) => {
   if (!emoji) return;
 
   const db = get(channelId, messageId, emoji);
-  if (db.permanent) return;
+
+  const roleName = (await reaction.message.guild?.roles.fetch(db.roleId))?.name;
+  if (!roleName) return;
+
+  if (db.permanent) {
+    try {
+      await member?.send(
+        messages.reactionRemovePermanent
+          .replace("{roleId}", db.roleId)
+          .replace("{roleName}", roleName),
+      );
+    } catch {}
+    return;
+  }
 
   try {
     await member?.roles.remove(db.roleId);
+  } catch {}
+
+  try {
+    await member?.send(
+      messages.reactionRemove
+        .replace("{roleId}", db.roleId)
+        .replace("{roleName}", roleName),
+    );
   } catch {}
 });
 

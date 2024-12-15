@@ -2,7 +2,11 @@
   "name": "emoji-reaction-role",
   "module": "src/index.ts",
   "type": "module",
-  "scripts": {},
+  "scripts": {
+    "start:bun": "bun",
+    "start:deno": "deno run -A src/index.ts",
+    "start:node": "node --experimental-strip-types src/index.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },

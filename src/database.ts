@@ -40,7 +40,20 @@ export function remove(channelId: string, messageId: string) {
   }
 }
 
-export function get(channelId: string, messageId: string, emoji?: string) {
+export function get(
+  channelId: string,
+  messageId: string,
+): Database[string][string];
+export function get(
+  channelId: string,
+  messageId: string,
+  emoji: string,
+): Database[string][string][string];
+export function get(
+  channelId: string,
+  messageId: string,
+  emoji?: string,
+): Database[string][string] | Database[string][string][string] {
   if (!emoji) return database?.[channelId]?.[messageId];
   return database[channelId]?.[messageId]?.[emoji];
 }

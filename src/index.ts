@@ -57,6 +57,7 @@ client.on(Events.MessageReactionAdd, async (reaction, user) => {
   if (!emoji) return;
 
   const db = get(channelId, messageId, emoji);
+  if (!db) return;
 
   const roleName = (await reaction.message.guild?.roles.fetch(db.roleId))?.name;
   if (!roleName) return;
@@ -92,6 +93,7 @@ client.on(Events.MessageReactionRemove, async (reaction, user) => {
   if (!emoji) return;
 
   const db = get(channelId, messageId, emoji);
+  if (!db) return;
 
   const roleName = (await reaction.message.guild?.roles.fetch(db.roleId))?.name;
   if (!roleName) return;

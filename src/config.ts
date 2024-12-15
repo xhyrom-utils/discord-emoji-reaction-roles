@@ -76,7 +76,7 @@ class EmbedMessage extends Message {
     return {
       embeds: [
         new EmbedBuilder()
-          .setTitle(this.replacePlaceholders(this.description, ...placeholders))
+          .setTitle(this.replacePlaceholders(this.title, ...placeholders))
           .setDescription(
             this.replacePlaceholders(this.description, ...placeholders),
           )

@@ -1,3 +1,4 @@
+import { channelLink } from "discord.js";
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -39,7 +40,8 @@ export function remove(channelId: string, messageId: string) {
   }
 }
 
-export function get(channelId: string, messageId: string, emoji: string) {
+export function get(channelId: string, messageId: string, emoji?: string) {
+  if (!emoji) return database?.[channelId]?.[messageId];
   return database[channelId]?.[messageId]?.[emoji];
 }
 

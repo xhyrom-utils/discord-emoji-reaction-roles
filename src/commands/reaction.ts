@@ -29,7 +29,7 @@ export default {
             .setDescription("The emoji to react with.")
             .setRequired(true),
         )
-        .addStringOption((option) =>
+        .addRoleOption((option) =>
           option
             .setName("role_id")
             .setDescription(
@@ -37,7 +37,7 @@ export default {
             )
             .setRequired(true),
         )
-        .addStringOption((option) =>
+        .addChannelOption((option) =>
           option
             .setName("channel_id")
             .setDescription("The ID of the channel to react in.")
@@ -61,7 +61,7 @@ export default {
             .setDescription("The ID of the message to react to.")
             .setRequired(true),
         )
-        .addStringOption((option) =>
+        .addChannelOption((option) =>
           option
             .setName("channel_id")
             .setDescription("The ID of the channel to react in.")
@@ -80,11 +80,11 @@ export default {
   add: async (interaction: ChatInputCommandInteraction) => {
     const messageId = interaction.options.getString("message_id", true);
     const channelId =
-      interaction.options.getString("channel_id", false) ??
+      interaction.options.getChannel("channel_id", false)?.id ??
       interaction.channelId;
 
     const emoji = interaction.options.getString("emoji", true);
-    const roleId = interaction.options.getString("role_id", true);
+    const roleId = interaction.options.getRole("role_id", true).id;
     const permanent =
       interaction.options.getBoolean("permanent", false) ?? false;
 
@@ -133,7 +133,7 @@ export default {
   remove: async (interaction: ChatInputCommandInteraction) => {
     const messageId = interaction.options.getString("message_id", true);
     const channelId =
-      interaction.options.getString("channel_id", false) ??
+      interaction.options.getChannel("channel_id", false)?.id ??
       interaction.channelId;
 
     const message = await (

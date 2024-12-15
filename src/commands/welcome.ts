@@ -7,15 +7,9 @@ export default {
     .setName("rewelcome")
     .setDescription("Send a welcome message to a user."),
   execute: async (self: Command, interaction: ChatInputCommandInteraction) => {
-    try {
-      await interaction.user.send(
-        messages.welcome.build({ username: interaction.user.username }),
-      );
-    } catch {
-      await interaction.reply({
-        ...messages.disabledDms.build(),
-        ephemeral: true,
-      });
-    }
+    await interaction.reply({
+      ...messages.welcome.build({ username: interaction.user.username }),
+      ephemeral: true,
+    });
   },
 } satisfies Command;

@@ -13,7 +13,7 @@ interface Database {
   };
 }
 
-var database: Database = await read();
+export var database: Database = await read();
 
 export function add(
   channelId: string,

@@ -102,6 +102,11 @@ client.on(Events.MessageReactionAdd, async (reaction, user) => {
             }),
           );
       } catch {}
+
+      try {
+        await reaction.users.remove(user.id);
+      } catch (err) {}
+
       return;
     }
 
